@@ -1,13 +1,19 @@
 [diff]
-	tool = vimdiff
+	tool = gvimdiff
 [difftool]
 	prompt = false
+	trustExitCode = true
 [alias]
 	d = difftool
-	g = grep --break --heading --line-number
-	f = "!git ls-files | grep -i"
-	la = "!git config -l | grep alias | cut -c 7-"
+  drt = "!f() { git difftool "$1"^.."$1"; }; f"
+  lc = "!f() { git ll "$1"^.."$1"; }; f"
+  diffr = "!f() { git diff "$1"^.."$1"; }; f"
+	g = grep -Ii --break --heading --line-number
+  f = "!git ls-files | grep -i"
+  fl = log -u
+  la = "!git config -l | grep alias | cut -c 7-"
   ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+  le = log --oneline --decorate
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
 	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
