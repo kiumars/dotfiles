@@ -1,97 +1,138 @@
-" General Vim settings
-	syntax on
-	let mapleader=","
-	set relativenumber number
-	set autoindent
-	set tabstop=4
-	set shiftwidth=4
-	set dir=/tmp/
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"   Filename: .vimrc                                                         "
+" Maintainer: Michael J. Smalley <michaeljsmalley@gmail.com>                 "
+"        URL: http://github.com/michaeljsmalley/dotfiles                     "
+"                                                                            "
+"                                                                            "
+" Sections:                                                                  "
+"   01. General ................. General Vim behavior                       "
+"   02. Events .................. General autocmd events                     "
+"   03. Theme/Colors ............ Colors, fonts, etc.                        "
+"   04. Vim UI .................. User interface behavior                    "
+"   05. Text Formatting/Layout .. Text, tab, indentation related             "
+"   06. Custom Commands ......... Any custom command aliases                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-	set cursorline
-	hi Cursor ctermfg=White ctermbg=Yellow cterm=bold guifg=white guibg=yellow gui=bold
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 01. General                                                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible         " get rid of Vi compatibility mode. SET FIRST!
 
-	au FocusLost * :set number
-	au FocusGained * :set relativenumber
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vundle added by me
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'vimwiki/vimwiki'
+call vundle#end()
 
-	set hlsearch
-	nnoremap <C-l> :nohl<CR><C-l>:echo "Search Cleared"<CR>
-	nnoremap <C-c> :set norelativenumber<CR>:set nonumber<CR>:echo "Line numbers turned off."<CR>
-	nnoremap <C-n> :set relativenumber<CR>:set number<CR>:echo "Line numbers turned on."<CR>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 02. Events                                                                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
 
-	nnoremap n nzzzv
-	nnoremap N Nzzzv
+" In Makefiles DO NOT use spaces instead of tabs
+autocmd FileType make setlocal noexpandtab
+" In Ruby files, use 2 spaces instead of 4 for tabs
+autocmd FileType ruby setlocal sw=2 ts=2 sts=2
 
-	nnoremap H 0
-	nnoremap L $
-	nnoremap J G
-	nnoremap K gg
+" Enable omnicompletion (to use, hold Ctrl+X then Ctrl+O while in Insert mode.
+set ofu=syntaxcomplete#Complete
 
-	map <tab> %
+" Pathogen
+execute pathogen#infect()
 
-	set backspace=indent,eol,start
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 03. Theme/Colors                                                           "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set t_Co=256              " enable 256-color mode.
+syntax enable             " enable syntax highlighting (previously syntax on).
+colorscheme molokai       " set colorscheme
 
-	nnoremap <Space> za
-	nnoremap <leader>z zMzvzz
+" Prettify JSON files
+autocmd BufRead,BufNewFile *.json set filetype=json
+autocmd Syntax json sou ~/.vim/syntax/json.vim
 
-	nnoremap vv 0v$
+" Prettify Vagrantfile
+autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
 
-	set listchars=tab:\|\ 
-	nnoremap <leader><tab> :set list!<cr>
-	set pastetoggle=<F2>
-	set mouse=a
-	set incsearch
+" Prettify Markdown files
+augroup markdown
+  au!
+  au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+augroup END
 
-" Language Specific
-	" General
-		inoremap <leader>for <esc>Ifor (int i = 0; i < <esc>A; i++) {<enter>}<esc>O<tab>
-		inoremap <leader>if <esc>Iif (<esc>A) {<enter>}<esc>O<tab>
-		
+" Highlight characters that go over 80 columns (by drawing a border on the 81st)
+if exists('+colorcolumn')
+  set colorcolumn=81
+  highlight ColorColumn ctermbg=red
+else
+  highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+  match OverLength /\%81v.\+/
+endif
 
-	" Java
-		inoremap <leader>sys <esc>ISystem.out.println(<esc>A);
-		vnoremap <leader>sys yOSystem.out.println(<esc>pA);
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 04. Vim UI                                                                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set number                " show line numbers
+set numberwidth=6         " make the number gutter 6 characters wide
+set cul                   " highlight current line
+set laststatus=2          " last window always has a statusline
+set nohlsearch            " Don't continue to highlight searched phrases.
+set incsearch             " But do highlight as you type your search.
+set ignorecase            " Make searches case-insensitive.
+set ruler                 " Always show info along bottom.
+set showmatch
+set statusline=%<%f\%h%m%r%=%-20.(line=%l\ \ col=%c%V\ \ totlin=%L%)\ \ \%h%m%r%=%-40(bytval=0x%B,%n%Y%)\%P
+set visualbell
 
-	" C++
-		inoremap <leader>cout <esc>Istd::cout << <esc>A << std::endl;
-		vnoremap <leader>cout yOstd::cout << <esc>pA << std:endl;
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 05. Text Formatting/Layout                                                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set autoindent            " auto-indent
+set tabstop=2             " tab spacing
+set softtabstop=2         " unify
+set shiftwidth=2          " indent/outdent by 2 columns
+set shiftround            " always indent/outdent to the nearest tabstop
+set expandtab             " use spaces instead of tabs
+set smartindent           " automatically insert one extra level of indentation
+set smarttab              " use tabs at the start of a line, spaces elsewhere
+set nowrap                " don't wrap text
 
-	" C
-		inoremap <leader>out <esc>Iprintf(<esc>A);<esc>2hi
-		vnoremap <leader>out yOprintf(, <esc>pA);<esc>h%a
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 06. Custom Commands                                                        "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-	" Typescript
-		autocmd BufNewFile,BufRead *.ts set syntax=javascript
-		autocmd BufNewFile,BufRead *.tsx set syntax=javascript
+" Prettify JSON files making them easier to read
+command PrettyJSON %!python -m json.tool
 
-	" Markup
-		inoremap <leader>< <esc>I<<esc>A><esc>yypa/<esc>O<tab>
+set directory=$HOME/.vim/swapfiles//
+set backupdir=$HOME/.vim/backup_files//
+set undodir=$HOME/.vim/undo_files//
+
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+set runtimepath^=~/.vim/bundle/ag
 
 
-" File and Window Management 
-	inoremap <leader>w <Esc>:w<CR>
-	nnoremap <leader>w :w<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
 
-	inoremap <leader>q <ESC>:q<CR>
-	nnoremap <leader>q :q<CR>
+inoremap {<cr> {<cr>}<c-o><s-o>
+inoremap [<cr> [<cr>]<c-o><s-o>
+inoremap (<cr> (<cr>)<c-o><s-o>
 
-	inoremap <leader>x <ESC>:x<CR>
-	nnoremap <leader>x :x<CR>
 
-	nnoremap <leader>e :Ex<CR>
-	nnoremap <leader>t :tabnew<CR>:Ex<CR>
-	nnoremap <leader>v :vsplit<CR>:w<CR>:Ex<CR>
-	nnoremap <leader>s :split<CR>:w<CR>:Ex<CR>
+"nmap<c-h> <c-w>h<c-w>
+"nmap<c-l> <c-w>l<c-w>
+"nmap<c-k> <c-w>k<c-w>
+"nmap<c-i> <c-w>i<c-w>
 
-" Return to the same line you left off at
-	augroup line_return
-		au!
-		au BufReadPost *
-			\ if line("'\"") > 0 && line("'\"") <= line("$") |
-			\	execute 'normal! g`"zvzz' |
-			\ endif
-	augroup END
-
-" Future stuff
-	"Swap line
-	"Insert blank below and above
+let mapleader=","
+map <leader>h :wincmd h<CR>
+map <leader>j :wincmd j<CR>
+map <leader>k :wincmd k<CR>
+map <leader>l :wincmd l<CR>
 
