@@ -29,7 +29,12 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'vimwiki/vimwiki'
 Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/nerdtree'
+Plugin 'rking/ag.vim'
+Plugin 'kien/ctrlp.vim'
 call vundle#end()
+
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Events                                                                 "
@@ -45,7 +50,7 @@ autocmd FileType ruby setlocal sw=2 ts=2 sts=2
 set ofu=syntaxcomplete#Complete
 
 " Pathogen
-execute pathogen#infect()
+" execute pathogen#infect()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 03. Theme/Colors                                                           "
@@ -53,6 +58,8 @@ execute pathogen#infect()
 set t_Co=256              " enable 256-color mode.
 syntax enable             " enable syntax highlighting (previously syntax on).
 colorscheme molokai       " set colorscheme
+let g:molokai_original = 1
+let g:rehash256 = 1
 
 " Prettify JSON files
 autocmd BufRead,BufNewFile *.json set filetype=json
