@@ -37,6 +37,8 @@ Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plugin 'junegunn/fzf.vim'
 Plugin 'junegunn/seoul256.vim'
 
+Plugin 'majutsushi/tagbar'
+
 call vundle#end()
 
 set rtp+=~/.fzf
