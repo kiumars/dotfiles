@@ -35,6 +35,7 @@ Plugin 'kien/ctrlp.vim'
 
 Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plugin 'junegunn/fzf.vim'
+Plugin 'junegunn/seoul256.vim'
 
 call vundle#end()
 
