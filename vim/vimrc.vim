@@ -38,6 +38,7 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'junegunn/seoul256.vim'
 
 Plugin 'majutsushi/tagbar'
+Plugin 'airblade/vim-gitgutter'
 
 call vundle#end()
 
@@ -134,11 +135,16 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 set runtimepath^=~/.vim/bundle/ag
 
 
+let mapleader=","
+
 nnoremap <C-n> :NERDTreeToggle<CR>
 
 inoremap {<cr> {<cr>}<c-o><s-o>
 inoremap [<cr> [<cr>]<c-o><s-o>
 inoremap (<cr> (<cr>)<c-o><s-o>
+
+nnoremap <leader>g :GitGutterToggle<CR>
+nnoremap <leader>] :TagbarToggle<CR>
 
 
 "nmap<c-h> <c-w>h<c-w>
@@ -146,7 +152,6 @@ inoremap (<cr> (<cr>)<c-o><s-o>
 "nmap<c-k> <c-w>k<c-w>
 "nmap<c-i> <c-w>i<c-w>
 
-let mapleader=","
 map <leader>h :wincmd h<CR>
 map <leader>j :wincmd j<CR>
 map <leader>k :wincmd k<CR>
