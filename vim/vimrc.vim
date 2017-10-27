@@ -40,6 +40,8 @@ Plugin 'junegunn/seoul256.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'airblade/vim-gitgutter'
 
+Plugin 'itchyny/lightline.vim'
+
 call vundle#end()
 
 set rtp+=~/.fzf
