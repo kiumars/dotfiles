@@ -40,7 +40,8 @@ Plugin 'junegunn/seoul256.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'airblade/vim-gitgutter'
 
-Plugin 'itchyny/lightline.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 call vundle#end()
 
