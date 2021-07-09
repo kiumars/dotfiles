@@ -25,25 +25,48 @@ set nocompatible         " get rid of Vi compatibility mode. SET FIRST!
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'vimwiki/vimwiki'
-Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/nerdtree'
-Plugin 'rking/ag.vim'
-Plugin 'kien/ctrlp.vim'
+"call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plugin 'junegunn/fzf.vim'
-Plugin 'junegunn/seoul256.vim'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-fireplace'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-unimpaired'
 
-Plugin 'majutsushi/tagbar'
-Plugin 'airblade/vim-gitgutter'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'rking/ag.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'easymotion/vim-easymotion'
 
-call vundle#end()
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/gv.vim'
+Plug 'junegunn/seoul256.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/vim-peekaboo'
+
+Plug 'fszymanski/fzf-quickfix'
+Plug 'stsewd/fzf-checkout.vim'
+
+Plug 'majutsushi/tagbar'
+Plug 'airblade/vim-gitgutter'
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+Plug 'plasticboy/vim-markdown'
+
+Plug 'terryma/vim-expand-region'
+Plug 'morhetz/gruvbox'
+
+call plug#end()
+"call vundle#end()
 
 set rtp+=~/.fzf
 
@@ -69,7 +92,8 @@ set ofu=syntaxcomplete#Complete
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set t_Co=256              " enable 256-color mode.
 syntax enable             " enable syntax highlighting (previously syntax on).
-colorscheme molokai       " set colorscheme
+set background=dark
+colorscheme gruvbox       " set colorscheme
 let g:molokai_original = 1
 let g:rehash256 = 1
 
@@ -138,9 +162,11 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 set runtimepath^=~/.vim/bundle/ag
 
 
-let mapleader=","
+let mapleader="\<space>"
 
 nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeFind<CR>
+nnoremap <leader>gc :GBranches<CR>
 
 inoremap {<cr> {<cr>}<c-o><s-o>
 inoremap [<cr> [<cr>]<c-o><s-o>
@@ -162,3 +188,39 @@ map <leader>l :wincmd l<CR>
 
 
 let g:lightline = {'colorscheme': 'wombat',}
+
+
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+nmap <Leader><Leader> V
+vmap v <Plug>(expand-region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
+nnoremap <Leader>o :Files<CR>
+nnoremap <Leader>t :TagbarOpenAutoClose<CR>
+
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>q :q<CR>
+nnoremap <Leader>qq :qa<CR>
+nnoremap <Leader>e :Git blame<CR>
+
+nmap <Leader>z <Plug(fzf-quickfix)
+
+nnoremap th  :tabfirst<CR>
+nnoremap tk  :tabnext<CR>
+nnoremap tj  :tabprev<CR>
+nnoremap tl  :tablast<CR>
+nnoremap tt  :tabedit<Space>
+"nnoremap tn  :tabnext<Space>
+nnoremap tm  :tabm<Space>
+nnoremap td  :tabclose<CR>
+" Alternatively use
+"nnoremap th :tabnext<CR>
+"nnoremap tl :tabprev<CR>
+nnoremap tn :tabnew<CR>
+
+autocmd User FugitiveCommit set foldmethod=syntax
