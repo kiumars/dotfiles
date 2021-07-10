@@ -51,6 +51,8 @@ Plug 'junegunn/seoul256.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/vim-peekaboo'
 
+Plug 'udalov/kotlin-vim'
+
 Plug 'fszymanski/fzf-quickfix'
 Plug 'stsewd/fzf-checkout.vim'
 

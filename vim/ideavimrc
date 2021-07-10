@@ -1,0 +1,54 @@
+let mapleader = " "
+
+set hslsearch
+set incsearch
+set scrolloff=2
+set smartcase
+set showmode
+set history=1000
+set surround
+
+set easymotion
+set comentary
+set NERDTree
+set showcmd
+
+nnoremap tk gt
+nnoremap tj gT
+
+nnoremap [oh :set hlsearch<CR>
+nnoremap ]oh :set nohlsearch<CR>
+
+nnoremap <leader>t :action FileStructurePoup<CR>
+nnoremap <leader>e :action Annotate<CR>
+nnoremap <leader>n :action SelectInProjectView<CR>
+nnoremap <leader>s :action Android.SyncProject<CR>
+
+nnoremap <leader>r :action Run<CR>
+nnoremap <leader>R :action RunClass<CR>
+nnoremap <leader>S :action Stop<CR>
+
+
+" built-in navigation to navigated item works better
+nnoremap <c-o> :action Back<CR>
+nnoremap <c-i> :action Forward<CR>
+
+" but preserve ideavim defaults
+nnoremap g<c-i> <c-o>
+nnoremap g<c-i> <c-i>
+
+" built-in search looks better
+nnoremap g/ :action Find<CR>
+
+" unimpared mappings
+nnoremap [<leader> O<esc>j
+nnoremap ]<leader> o<esc>k
+nnoremap [m :action MethodUp<CR>
+nnoremap ]m :action MethodDown<CR>
+nnoremap [c :action VcsShowPrevChangeMrker<CR>
+nnoremap ]c :action VcsShowNextChangeMrker<CR>
+
+
+nnoremap <leader>f :action ReformatCode<CR>
+nnoremap <leader>o :action OptimizeImports<CR>
+
